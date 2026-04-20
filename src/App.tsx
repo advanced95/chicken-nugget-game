@@ -897,49 +897,50 @@ export default function App() {
           className="w-full h-auto block"
         />
 
-        <AnimatePresence>
-          {gameState === 'PLAYING' && (
-            <div key="controls" className="absolute inset-x-0 bottom-8 px-8 flex justify-between items-end pointer-events-none select-none touch-none">
-              <div className="flex gap-4 pointer-events-auto">
-                <button 
-                  className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center border-2 border-white/50 active:bg-white/50 transition-colors"
-                  onPointerDown={() => { keysRef.current['ArrowLeft'] = true; }}
-                  onPointerUp={() => { keysRef.current['ArrowLeft'] = false; }}
-                  onPointerLeave={() => { keysRef.current['ArrowLeft'] = false; }}
-                >
-                  <ArrowLeft size={32} />
-                </button>
-                <button 
-                  className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center border-2 border-white/50 active:bg-white/50 transition-colors"
-                  onPointerDown={() => { keysRef.current['ArrowRight'] = true; }}
-                  onPointerUp={() => { keysRef.current['ArrowRight'] = false; }}
-                  onPointerLeave={() => { keysRef.current['ArrowRight'] = false; }}
-                >
-                  <ArrowRight size={32} />
-                </button>
-              </div>
-              <div className="flex gap-4 pointer-events-auto">
-                {showBlaster && (
-                  <button 
-                    className="w-16 h-16 bg-[#DA291C]/50 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 active:bg-[#DA291C]/80 transition-colors"
-                    onPointerDown={() => { keysRef.current['Space'] = true; }}
-                    onPointerUp={() => { keysRef.current['Space'] = false; }}
-                    onPointerLeave={() => { keysRef.current['Space'] = false; }}
-                  >
-                    <Target size={32} />
-                  </button>
-                )}
-                <button 
-                  className="w-20 h-20 bg-[#FFC72C]/50 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 active:bg-[#FFC72C]/80 transition-colors"
-                  onPointerDown={() => { keysRef.current['ArrowUp'] = true; }}
-                  onPointerUp={() => { keysRef.current['ArrowUp'] = false; }}
-                  onPointerLeave={() => { keysRef.current['ArrowUp'] = false; }}
-                >
-                  <ArrowUp size={40} />
-                </button>
-              </div>
+        {gameState === 'PLAYING' && (
+          <div key="controls-overlay" className="absolute inset-0 pointer-events-none select-none touch-none z-50">
+            <div className="absolute bottom-8 left-8 flex gap-4 pointer-events-auto">
+              <button 
+                className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center border-2 border-white/50 active:bg-white/50 transition-colors"
+                onPointerDown={(e) => { e.preventDefault(); keysRef.current['ArrowLeft'] = true; }}
+                onPointerUp={(e) => { e.preventDefault(); keysRef.current['ArrowLeft'] = false; }}
+                onPointerLeave={(e) => { e.preventDefault(); keysRef.current['ArrowLeft'] = false; }}
+              >
+                <ArrowLeft size={32} />
+              </button>
+              <button 
+                className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center border-2 border-white/50 active:bg-white/50 transition-colors"
+                onPointerDown={(e) => { e.preventDefault(); keysRef.current['ArrowRight'] = true; }}
+                onPointerUp={(e) => { e.preventDefault(); keysRef.current['ArrowRight'] = false; }}
+                onPointerLeave={(e) => { e.preventDefault(); keysRef.current['ArrowRight'] = false; }}
+              >
+                <ArrowRight size={32} />
+              </button>
             </div>
-          )}
+            <div className="absolute bottom-8 right-8 flex gap-4 pointer-events-auto items-end">
+              {showBlaster && (
+                <button 
+                  className="w-16 h-16 bg-[#DA291C]/50 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 active:bg-[#DA291C]/80 transition-colors"
+                  onPointerDown={(e) => { e.preventDefault(); keysRef.current['Space'] = true; }}
+                  onPointerUp={(e) => { e.preventDefault(); keysRef.current['Space'] = false; }}
+                  onPointerLeave={(e) => { e.preventDefault(); keysRef.current['Space'] = false; }}
+                >
+                  <Target size={32} />
+                </button>
+              )}
+              <button 
+                className="w-20 h-20 bg-[#FFC72C]/50 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 active:bg-[#FFC72C]/80 transition-colors"
+                onPointerDown={(e) => { e.preventDefault(); keysRef.current['ArrowUp'] = true; }}
+                onPointerUp={(e) => { e.preventDefault(); keysRef.current['ArrowUp'] = false; }}
+                onPointerLeave={(e) => { e.preventDefault(); keysRef.current['ArrowUp'] = false; }}
+              >
+                <ArrowUp size={40} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        <AnimatePresence mode="wait">
 
           {gameState === 'START' && (
             <motion.div 
